@@ -27,6 +27,12 @@ public class Game {
         kills = new HashMap<>();
     }
 
+    public void addKill(){
+        totalKills++;
+    }
+
+
+
     public Integer getTotalKills() {
         return totalKills;
     }
