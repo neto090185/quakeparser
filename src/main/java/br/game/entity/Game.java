@@ -31,6 +31,10 @@ public class Game {
         totalKills++;
     }
 
+    public boolean addPlayer(String player){
+        return players.add(player);
+    }
+
 
 
     public Integer getTotalKills() {

@@ -19,17 +19,16 @@ public class QuakeParser {
             String line = scanner.nextLine();
             switch (extractAction(line)) {
                 case "InitGame":
-                    System.out.println("init game");
                     game = new Game();
                     break;
                 case "Kill":
                     game.addKill();
                     break;
                 case "ClientUserinfoChanged":
-
+                    game.addPlayer(extractPlayer(line));
                     break;
                 case "ShutdownGame":
-                    System.out.println("game_" + count++  + "  " + game.getTotalKills());
+                    System.out.println("game_" + count++ + "  " + game.getTotalKills() + "  " + game.getPlayers());
                     break;
             }
         }
@@ -43,5 +42,9 @@ public class QuakeParser {
             return line.substring(first + 4, second);
         }
         return "INVALID";
+    }
+
+    public String extractPlayer(String line) {
+        return line.substring(line.indexOf(" n\\")+3, line.indexOf("\\t\\"));
     }
 }
