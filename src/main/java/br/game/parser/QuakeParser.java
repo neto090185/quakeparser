@@ -6,8 +6,13 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class QuakeParser {
+    private final Pattern actionPattern = Pattern.compile("\\s*\\d{1,2}:\\d{2}\\s*(\\w+):\\w*");
+    private final Pattern playerPattern = Pattern.compile("\\s n\\\\(.*?)\\\\t\\\\");
+
 
     public Map<String, Game> parser(InputStream inputStream) {
         Map<String, Game> games = new HashMap<>();
@@ -36,15 +41,14 @@ public class QuakeParser {
     }
 
     public String extractAction(String line) {
-        int second = line.indexOf(":", 7);
-        if (second > 0) {
-            int first = line.indexOf(":");
-            return line.substring(first + 4, second);
+        Matcher matcher = actionPattern.matcher(line);
+        if (matcher.find()) {
+            return matcher.group(1);
         }
         return "INVALID";
     }
 
     public String extractPlayer(String line) {
-        return line.substring(line.indexOf(" n\\")+3, line.indexOf("\\t\\"));
+        return line.substring(line.indexOf(" n\\") + 3, line.indexOf("\\t\\"));
     }
 }
