@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class QuakeParser {
     private final Pattern actionPattern = Pattern.compile("\\s*\\d{1,2}:\\d{2}\\s*(\\w+):\\w*");
-    private final Pattern playerPattern = Pattern.compile("\\s n\\\\(.*?)\\\\t\\\\");
+    private final Pattern playerPattern = Pattern.compile("n\\\\(.*?)\\\\t\\\\");
 
 
     public Map<String, Game> parser(InputStream inputStream) {
@@ -49,6 +49,7 @@ public class QuakeParser {
     }
 
     public String extractPlayer(String line) {
-        return line.substring(line.indexOf(" n\\") + 3, line.indexOf("\\t\\"));
+        Matcher matcher = playerPattern.matcher(line);
+        return matcher.find() ? matcher.group(1) : null;
     }
 }
