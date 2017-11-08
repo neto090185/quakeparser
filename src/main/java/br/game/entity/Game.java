@@ -27,7 +27,7 @@ public class Game {
         kills = new HashMap<>();
     }
 
-    public void addKill(){
+    public void addTotalKill(){
         totalKills++;
     }
 
@@ -79,5 +79,13 @@ public class Game {
         result = 31 * result + (players != null ? players.hashCode() : 0);
         result = 31 * result + (kills != null ? kills.hashCode() : 0);
         return result;
+    }
+
+    public void subKill(String player) {
+        kills.merge(player,1,Integer::sum);
+    }
+
+    public void addKill(String player) {
+        kills.merge(player,-1,Integer::sum);
     }
 }

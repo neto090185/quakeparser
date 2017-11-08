@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 public class QuakeParser {
     private final Pattern actionPattern = Pattern.compile("\\s*\\d{1,2}:\\d{2}\\s*(\\w+):\\w*");
     private final Pattern playerPattern = Pattern.compile("n\\\\(.*?)\\\\t\\\\");
+    private final Pattern killPattern = Pattern.compile("Kill:[\\s\\d]+:\\s+(.+?)\\skilled\\s+(.+?)\\s+by");
 
 
     public Map<String, Game> parser(InputStream inputStream) {
@@ -27,13 +28,20 @@ public class QuakeParser {
                     game = new Game();
                     break;
                 case "Kill":
-                    game.addKill();
+                    Matcher matcher = killPattern.matcher(line);
+                    if(matcher.find()){
+                        if("<world>".equals(matcher.group(1))){
+                            game.subKill(matcher.group(2));
+                        }else{
+                            game.addKill(matcher.group(1));
+                        }
+                    }
+                    game.addTotalKill();
                     break;
                 case "ClientUserinfoChanged":
                     game.addPlayer(extractPlayer(line));
                     break;
                 case "ShutdownGame":
-                    System.out.println("game_" + count++ + "  " + game.getTotalKills() + "  " + game.getPlayers());
                     break;
             }
         }
