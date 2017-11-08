@@ -6,15 +6,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-//    game_1: {
-//            total_kills: 45;
-//            players: ["Dono da bola", "Isgalamido", "Zeh"]
-//            kills: {
-//            "Dono da bola": 5,
-//            "Isgalamido": 18,
-//            "Zeh": 20
-//            }
-//            }
 public class Game {
 
     private Integer totalKills;
@@ -41,24 +32,21 @@ public class Game {
         return totalKills;
     }
 
-    public void setTotalKills(Integer totalKills) {
-        this.totalKills = totalKills;
-    }
-
     public Set<String> getPlayers() {
         return players;
-    }
-
-    public void setPlayers(Set<String> players) {
-        this.players = players;
     }
 
     public Map<String, Integer> getKills() {
         return kills;
     }
 
-    public void setKills(Map<String, Integer> kills) {
-        this.kills = kills;
+    @Override
+    public String toString() {
+        return "{" +
+                "totalKills=" + totalKills +
+                ", players=" + players +
+                ", kills=" + kills +
+                '}';
     }
 
     @Override

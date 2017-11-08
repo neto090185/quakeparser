@@ -29,10 +29,10 @@ public class QuakeParser {
                     break;
                 case "Kill":
                     Matcher matcher = killPattern.matcher(line);
-                    if(matcher.find()){
-                        if("<world>".equals(matcher.group(1))){
+                    if (matcher.find()) {
+                        if ("<world>".equals(matcher.group(1))) {
                             game.subKill(matcher.group(2));
-                        }else{
+                        } else {
                             game.addKill(matcher.group(1));
                         }
                     }
@@ -42,6 +42,7 @@ public class QuakeParser {
                     game.addPlayer(extractPlayer(line));
                     break;
                 case "ShutdownGame":
+                    games.put("game_" + count++, game);
                     break;
             }
         }
